@@ -3,17 +3,17 @@ package com.example.networking;
 public class Mountain {
 
     private String mId;
-    private String mName;
+    private String mMountain;
     private String mLocation;
-    private int mSize;
+    private int mHeight;
     private int   mCost;
 
 
     public Mountain(String id, String name, String location, int size, int cost) {
         mId = id;
-        mName = name;
+        mMountain = name;
         mLocation = location;
-        mSize = size;
+        mHeight= size;
         mCost = cost;
     }
 
@@ -21,16 +21,16 @@ public class Mountain {
         return mId;
     }
 
-    public String getName() {
-        return mName;
+    public String getMountain() {
+        return mMountain;
     }
 
     public String getLocation() {
         return mLocation;
     }
 
-    public int getSize() {
-        return mSize;
+    public int getHeight() {
+        return mHeight;
     }
 
     public int getCost() {
