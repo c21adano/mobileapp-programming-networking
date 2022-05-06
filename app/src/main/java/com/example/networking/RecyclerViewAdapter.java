@@ -13,7 +13,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.PeakViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private ArrayList<Mountain> mountains;
 
     public RecyclerViewAdapter(ArrayList<Mountain> mountains) {
@@ -22,22 +22,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.PeakViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mountain_list, parent, false);
-        return new PeakViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.PeakViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String mountain = mountains.get(position).getMountain();
         String location = mountains.get(position).getLocation();
         Integer height = mountains.get(position).getHeight();
         Integer cost = mountains.get(position).getCost();
+        String wiki = mountains.get(position).getAuxdata().getWiki();
 
         holder.mountain.setText(mountain);
         holder.location.setText((location));
         holder.height.setText(height.toString());
         holder.cost.setText(cost);
+        holder.wiki.setText(wiki);
+        Picasso.get()
+                .load(mountains.get(position).getAuxdata().getImg())
+                .into(holder.image_view, new Callback() {
+                    @Override
+                    public void onSuccess() {}
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get().load("https://i.ibb.co/wC7Q8zm/Untitled.png").into(holder.image_view);
+                    }
+                });
     }
 
     @Override
@@ -54,11 +67,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mountains = mountains;
     }
 
-    public class PeakViewHolder extends RecyclerView.ViewHolder{
-        TextView mountain, location, height, cost;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        TextView mountain, location, height, cost, wiki;
         ImageView image_view;
 
-        public PeakViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mountain = itemView.findViewById(R.id.mountain);

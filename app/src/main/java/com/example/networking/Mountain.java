@@ -7,7 +7,7 @@ public class Mountain {
     private String mLocation;
     private int mHeight;
     private int   mCost;
-
+    private Auxdata auxdata;
 
     public Mountain(String id, String name, String location, int size, int cost) {
         mId = id;
@@ -15,6 +15,7 @@ public class Mountain {
         mLocation = location;
         mHeight= size;
         mCost = cost;
+        auxdata = auxdata;
     }
 
     public String getId() {
@@ -35,5 +36,9 @@ public class Mountain {
 
     public int getCost() {
         return mCost;
+    }
+
+    public Auxdata getAuxdata() {
+        return auxdata;
     }
 }
