@@ -1,42 +1,61 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+It started with the creation of the recycleView layout that would be used in the program. 
+The recycleView layout is called mountain_list and is used to display info.
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+Followed by the creation of variables that would correspond to data from the json file.
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+ public Mountain(String id, String name, String location, int size, Auxdata auxdata) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.size = size;
+        this.auxdata = auxdata;
     }
-}
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+The RecyclerViewAdapter will adapt data. The adapter will transform the data so it can be displayed in the recyclerview.
 
-![](android.png)
+Bellow is the code that bind variables to assets in mountain_list
+```
+ private TextView name, location, size, wiki;
 
-Läs gärna:
+        public MountainViewHolder(final View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.Name);
+            location = itemView.findViewById(R.id.location);
+            size = itemView.findViewById(R.id.height);
+            wiki = itemView.findViewById(R.id.wiki);
+```
+Auxdata was created due to the json containing it. The Auxdata class serve a similar purpose to the Mountain class, but for Auxdata instead. (Mountain class is the class containing the variables).
+```
+ public Auxdata(String wiki, String img) {
+        this.wiki = wiki;
+        this.img= img;
+    }
+```
+Json data is imported with a url and then executed on 'onPostExecute'. The json data is then converted to java classes with gson. 
+The variables in the json is then match with other variables created in the program.
+```
+ public void onPostExecute(String json) {
+        Log.d("MainActivity", json);
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Mountain>>(){}.getType();
+        mountains = gson.fromJson(json, type);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mountains);
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView = findViewById(R.id.recycle_view);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(recyclerViewAdapter);
+    }
+```
+
+Down bellow is a screenshot of the app running. Images do not show up in the app due to the code implementing them not being finished.
+
+![](JsonThingRunning.png)
+
+
