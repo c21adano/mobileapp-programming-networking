@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Mountain>>(){}.getType();
         mountains = gson.fromJson(json, type);
-        RecyclerViewAdapter recyclerAdapter = new RecyclerViewAdapter(mountains);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mountains);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView = findViewById(R.id.recycle_view);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 
 }

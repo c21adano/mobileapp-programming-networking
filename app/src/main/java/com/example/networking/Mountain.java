@@ -1,44 +1,38 @@
 package com.example.networking;
 
+import android.util.Log;
+import com.google.gson.annotations.SerializedName;
 public class Mountain {
 
-    private String mId;
-    private String mMountain;
-    private String mLocation;
-    private int mHeight;
-    private int   mCost;
+    private String id;
+    private String name;
+    private String location;
+    private int size;
     private Auxdata auxdata;
 
-    public Mountain(String id, String name, String location, int size, int cost) {
-        mId = id;
-        mMountain = name;
-        mLocation = location;
-        mHeight= size;
-        mCost = cost;
-        auxdata = auxdata;
+    public Mountain(String id, String name, String location, int size, Auxdata auxdata) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.size = size;
+        this.auxdata = auxdata;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
-
-    public String getMountain() {
-        return mMountain;
+    public String getName() {
+        return name;
     }
-
     public String getLocation() {
-        return mLocation;
+        return location;
     }
-
-    public int getHeight() {
-        return mHeight;
+    public int getSize() {
+        return size;
     }
-
-    public int getCost() {
-        return mCost;
-    }
-
     public Auxdata getAuxdata() {
         return auxdata;
     }
+
+
 }

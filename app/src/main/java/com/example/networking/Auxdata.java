@@ -2,12 +2,12 @@ package com.example.networking;
 
 public class Auxdata {
 
-    private String wiki;
-    private String img;
+    private final String wiki;
+    private final String img;
 
     public Auxdata(String wiki, String img) {
         this.wiki = wiki;
-        this.img = img;
+        this.img= img;
     }
     public String getWiki() {
         return wiki;
